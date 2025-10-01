@@ -1,44 +1,184 @@
-:root{
-  --pumpkin:#FF7518; --purple:#4B0082; --green:#228B22; --black:#000; --ghost:#FFF;
-  --display:'Creepster', system-ui, sans-serif;
-  --body:'Inter', system-ui, sans-serif;
+/* === Spooky Book Theme: Black · Orange · White — JPEG as PAGE background === */
+
+:root {
+  --bg: #0b0b0b;
+  /* near-black */
+  --ink: #0b0b0b;
+  /* text on pages */
+  --accent: #ff6a00;
+  /* pumpkin orange */
+  --accent-dark: #e05e00;
+  /* darker pumpkin for active */
 }
 
-html{scroll-behavior:smooth}
-body{margin:0;font:16px/1.6 var(--body);color:var(--ghost);background:#0a0315;overflow:hidden}
+* {
+  box-sizing: border-box;
+}
 
-.page{display:none;min-height:100vh;place-items:center;position:relative}
-.page:first-of-type{display:grid}
-.page:target{display:grid}
+html,
+body {
+  height: 100%;
+}
 
-.intro-wrap{text-align:center;display:grid;gap:1rem;z-index:2;position:relative}
-.title{font-family:var(--display);font-size:clamp(2.5rem,10vw,5rem);color:#fff}
-.tagline{font-size:1.2rem;color:#ccc}
-.cta{display:inline-block;text-decoration:none;font-weight:700;background:var(--pumpkin);color:#000;padding:.9rem 1.5rem;border-radius:2rem}
-.cta:hover,.cta:focus{background:#ffa96e;outline:3px solid var(--green);outline-offset:3px}
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  background:
+    radial-gradient(1200px 700px at 70% -10%, rgba(255, 106, 0, .08), transparent 60%),
+    var(--bg);
+  color: var(--ink);
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
 
-.splash{text-align:center;padding:2rem}
-.placeholder{background:rgba(255,255,255,.1);padding:2rem;border-radius:1rem}
-.back{display:inline-block;margin-top:1rem;color:#fff;text-decoration:none;background:var(--purple);padding:.6rem 1rem;border-radius:.5rem}
-.back:hover,.back:focus{background:#6f16c1}
+/* Book container (two-page spread) */
+.book {
+  position: relative;
+  width: min(1100px, 95vw);
+  height: min(720px, 85vh);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-radius: 18px;
+  box-shadow:
+    0 30px 60px rgba(0, 0, 0, .6),
+    0 0 0 2px var(--accent);
+  background: var(--bg);
+  overflow: hidden;
+}
 
-.blood-drop{position:absolute;top:0;width:18px;height:18px;background:radial-gradient(circle at 30% 30%,#ffb3b3 10%,#8b0000 70%);border-radius:50%;box-shadow:inset -2px -4px 6px rgba(0,0,0,.5);animation:drip 3s infinite}
-.drop1{left:40%;animation-delay:0s}
-.drop2{left:50%;animation-delay:1s}
-.drop3{left:60%;animation-delay:2s}
-@keyframes drip{0%{top:-20px;opacity:1;height:18px}50%{top:60%;height:28px;opacity:1}100%{top:100%;opacity:0;height:8px}}
+/* Decorative spine */
+.book .spine {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 3px;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, var(--accent), #ff8c33 40%, var(--accent));
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, .35),
+    0 0 26px 4px rgba(255, 106, 0, .25);
+  pointer-events: none;
+}
 
-.ghost{position:absolute;width:80px;height:100px;background:var(--ghost);border-radius:50% 50% 40% 40%;opacity:.9;box-shadow:0 0 20px rgba(255,255,255,.5);cursor:pointer;transition:transform .2s,opacity .2s,filter .2s}
-.ghost::before{content:"";position:absolute;bottom:-12px;left:0;width:100%;height:20px;background:radial-gradient(circle at 20% 50%,var(--ghost) 60%,transparent 61%) repeat-x;background-size:20px 20px}
-.ghost::after{content:"";position:absolute;top:30%;left:25%;width:10px;height:10px;background:#000;border-radius:50%;box-shadow:30px 0 #000}
+/* PAGES — the JPEG is the page background */
+.page {
+  color: var(--ink);
+  padding: 28px 28px 60px;
+  /* room for buttons */
+  overflow: auto;
+  line-height: 1.6;
+  position: relative;
 
-.ghost1{top:20%;left:-100px;animation:floatGhost1 12s linear infinite}
-.ghost2{top:60%;left:-120px;animation:floatGhost2 15s linear infinite}
+  /* >>> background image only <<< */
+  background-image: url("bookpage.jpg");
+  background-size: cover;
+  /* fill each page */
+  background-position: center;
+  /* center the texture */
+  background-repeat: no-repeat;
+  /* no tiling */
+}
 
-.ghost1:hover,.ghost1:focus-visible{animation:floatGhost1 6s linear infinite,wobble .6s ease-in-out infinite;filter:drop-shadow(0 0 26px rgba(255,255,255,.8));transform:translateY(-4px) scale(1.03)}
-.ghost2:hover,.ghost2:focus-visible{animation:floatGhost2 7s linear infinite,wobble .6s ease-in-out infinite;filter:drop-shadow(0 0 26px rgba(255,255,255,.8));transform:translateY(-4px) scale(1.03)}
-.ghost:active{opacity:.2;transform:scale(.9)}
+.page-left {
+  box-shadow: inset -14px 0 28px -20px rgba(0, 0, 0, .55);
+  border-top-left-radius: 18px;
+  border-bottom-left-radius: 18px;
+  background-position: right center;
+  /* slightly different crop */
+}
 
-@keyframes floatGhost1{0%{transform:translateX(0) translateY(0);opacity:0}10%{opacity:1}50%{transform:translateX(120vw) translateY(-10px)}90%{opacity:1}100%{transform:translateX(130vw) translateY(0);opacity:0}}
-@keyframes floatGhost2{0%{transform:translateX(0) translateY(0);opacity:0}10%{opacity:1}50%{transform:translateX(120vw) translateY(10px)}90%{opacity:1}100%{transform:translateX(130vw) translateY(0);opacity:0}}
-@keyframes wobble{0%{transform:translateY(-3px)}50%{transform:translateY(3px)}100%{transform:translateY(-3px)}}
+.page-right {
+  box-shadow: inset 14px 0 28px -20px rgba(0, 0, 0, .55);
+  border-top-right-radius: 18px;
+  border-bottom-right-radius: 18px;
+  background-position: left center;
+  /* slightly different crop */
+}
+
+/* Text */
+.page p {
+  margin: 0 0 1rem;
+  hyphens: auto;
+}
+
+/* Prev/Next buttons */
+button.prev,
+button.next {
+  position: absolute;
+  bottom: 16px;
+  padding: 10px 14px;
+  border: 2px solid var(--accent);
+  background: var(--bg);
+  color: #fff;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 700;
+  letter-spacing: .2px;
+  text-transform: uppercase;
+  box-shadow:
+    0 6px 16px rgba(0, 0, 0, .4),
+    inset 0 0 20px rgba(255, 106, 0, .12);
+  transition: transform .08s ease, background .15s ease, box-shadow .15s ease, border-color .15s ease;
+}
+
+button.prev {
+  left: 16px;
+}
+
+button.next {
+  right: 16px;
+}
+
+button.prev:hover,
+button.next:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow:
+    0 10px 24px rgba(255, 106, 0, .35),
+    inset 0 0 20px rgba(0, 0, 0, .15);
+}
+
+button.prev:active,
+button.next:active {
+  transform: translateY(1px) scale(.99);
+  background: var(--accent-dark);
+  border-color: var(--accent-dark);
+}
+
+/* Keyboard focus */
+button.prev:focus-visible,
+button.next:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px var(--accent), 0 8px 18px rgba(255, 106, 0, .25);
+}
+
+/* Responsive stack (small screens) */
+@media (max-width: 800px) {
+  .book {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+
+  .spine {
+    display: none;
+  }
+
+  .page-left,
+  .page-right {
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .page-right {
+    border-top: 2px solid var(--accent);
+  }
+
+  button.prev,
+  button.next {
+    position: static;
+    margin: 12px 8px 0 0;
+  }
+}
