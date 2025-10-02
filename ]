@@ -273,19 +273,12 @@ body {
 
 .footer {
   text-align: center;
+
   background: rgba(0, 0, 0, 0.8);
   color: var(--ghost);
-
+  color: orange;
+  position: relative;
 }
-
-footer.footer {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 10;
-}
-
 
 .footer a {
   color: var(--pumpkin);
